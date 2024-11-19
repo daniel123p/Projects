@@ -6,10 +6,9 @@ import java.util.Scanner;
 
 public class AddNewGames {
 
-    //Input validation method that checks to see if the user inputs an actual file path
+    //Input validation method that checks to see if the user inputs an actual file path, i could simply call a File reader here, then implement a try catch. I may make another method to demonstrate this
     private static String checkPath(String gamePath){
         Scanner scanner = new Scanner(System.in);
-        String correctPath = "";
         //Booleans that find the \\ characters in the file path and check for an exe file
         Boolean slash = gamePath.contains("\\");
         Boolean exe = gamePath.contains(".exe");
@@ -19,16 +18,12 @@ public class AddNewGames {
         } else{
             while (exe == false || slash == false){
                 System.out.println("Please enter a file path that leads to an exe file and has slashes:");
-                correctPath = scanner.nextLine();
-                Boolean slash2 = correctPath.contains("\\");
-                Boolean exe2 = correctPath.contains(".exe");
-                if (exe2 == true && slash2 == true) {
-                    break;
-                }
+                gamePath = scanner.nextLine();
+                //using recursion
+                checkPath(gamePath);
             }
-            return correctPath;
         }
-
+        return gamePath;
     }
 
     //method that counts lines in the text file. When this program opens, this method counts the amount of games already in there and adds a corresponding number.
