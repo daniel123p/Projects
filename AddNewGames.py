@@ -3,12 +3,7 @@ import json
 
 #method will update the csv file
 def updateCSV(gameName, gamePath):
-    with open(r'C:\Users\Daniel\OneDrive\Desktop\Test.csv', 'a') as file:
-        test = [[gameName], [gamePath]]
-        ex = csv.writer(file)
-        #testing = [(gameName),(gamePath)]
-        ex.writerows(test)
-        
+    pass
 
 #method will update json file
 def updateJSON(gameName, gamePath):
@@ -31,8 +26,8 @@ def main():
     gameName = str(input("Please enter the game name: \n"))
     gamePath = str(input("Please enter the game file path: \n"))
 
-    updateCSV(gameName, gamePath)
-    #updateJSON(gameName, gamePath)
+    #updateCSV(gameName, gamePath)
+    updateJSON(gameName, gamePath)
     #updateTXT(gameName, gamePath)
 
     print("All files have been updated")    
