@@ -1,10 +1,10 @@
-package org.json;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-
+import org.json.*;
+import org.apache.commons.csv.*;
 
 
 public class AddNewGames {
@@ -45,7 +45,7 @@ public class AddNewGames {
     public static void updateJSON(String gameName, String gamePath){
        try {
            //make a new file path for my json file, JSON object to store gameName gamePath variables
-           String jsonFilePath = "C:\\Users\\Daniel\\OneDrive\\Desktop\\Games\\GamePathJSON - Copy.json";
+           String jsonFilePath = "C:\\Users\\Daniel\\OneDrive\\Desktop\\test.json";
            JSONObject gameKeys = new JSONObject();
            //Filewriter object writes the json file, then closes it
            FileWriter jsonWriter = new FileWriter(jsonFilePath, true);
@@ -63,14 +63,14 @@ public class AddNewGames {
 
     //this method updates the text files on the computer
     public static void updateTXT(String gameName, String gamePath){
-        //String filePath = "C:\\Users\\Daniel\\OneDrive\\Desktop\\Games\\GameFilePath.txt";
-        //String fileName = "C:\\Users\\Daniel\\OneDrive\\Desktop\\Games\\GameListTXT.txt";
-        String filePath = "C:\\Users\\Daniel\\OneDrive\\Desktop\\test2.txt";
-        String fileName = "C:\\Users\\Daniel\\OneDrive\\Desktop\\test.txt";
+        //String txtPath = "C:\\Users\\Daniel\\OneDrive\\Desktop\\Games\\GameFilePath.txt";
+        //String txtName = "C:\\Users\\Daniel\\OneDrive\\Desktop\\Games\\GameListTXT.txt";
+        String txtPath = "C:\\Users\\Daniel\\OneDrive\\Desktop\\test2.txt";
+        String txtName = "C:\\Users\\Daniel\\OneDrive\\Desktop\\test.txt";
         try {
-            FileWriter gP = new FileWriter(filePath, true);
-            FileWriter gN = new FileWriter(fileName, true);
-            gN.write("\n" + countLines(fileName) + " - " + gameName);
+            FileWriter gP = new FileWriter(txtPath, true);
+            FileWriter gN = new FileWriter(txtName, true);
+            gN.write("\n" + countLines(txtName) + " - " + gameName);
             gP.write("\n" + gamePath);
             gN.close();
             gP.close();
@@ -80,6 +80,7 @@ public class AddNewGames {
     }
 
     public static void updateCSV(String gameName, String gamePath){
+        String csvPath = "C:\\Users\\Daniel\\OneDrive\\Desktop\\Test.csv";
         ;
         //I must import the appropriate class before i can work on this method, it will update the CSV file on my computer.
     }
