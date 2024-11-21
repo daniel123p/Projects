@@ -8,7 +8,7 @@ import org.apache.commons.csv.*;
 
 
 public class AddNewGames {
-    //Input validation method that checks to see if the user inputs an actual file path, i could simply call a File reader here, then implement a try catch. I may make another method to demonstrate this
+    //Input  validation method that checks to see if the user inputs an actual file path, i could simply call a File reader here, then implement a try catch. I may make another method to demonstrate this
     private static String checkPath(String gamePath){
         Scanner scanner = new Scanner(System.in);
         //Booleans that find the \\ characters in the file path and check for an exe file
