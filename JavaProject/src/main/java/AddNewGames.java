@@ -1,29 +1,30 @@
+package org.json;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class AddNewGames {
 
+
+public class AddNewGames {
     //Input validation method that checks to see if the user inputs an actual file path, i could simply call a File reader here, then implement a try catch. I may make another method to demonstrate this
     private static String checkPath(String gamePath){
         Scanner scanner = new Scanner(System.in);
         //Booleans that find the \\ characters in the file path and check for an exe file
         Boolean slash = gamePath.contains("\\");
-        Boolean exe = gamePath.contains(".exe");
+        Boolean exe = gamePath.endsWith(".exe");
         //If statement that validates the input, returns correctPath if they input something, other than a filepath.
-        if (exe == true && slash == true){
+        if (exe && slash){
             return gamePath;
         } else{
-            while (exe == false || slash == false){
-                System.out.println("Please enter a file path that leads to an exe file and has slashes:");
+                //recursion
+                System.err.println("Please enter a valid file path. Be sure to that it leads to an executable file(.exe)");
                 gamePath = scanner.nextLine();
-                //using recursion
                 checkPath(gamePath);
             }
-        }
-        return gamePath;
+            return gamePath;
+        
     }
 
     //method that counts lines in the text file. When this program opens, this method counts the amount of games already in there and adds a corresponding number.
@@ -42,14 +43,30 @@ public class AddNewGames {
     }
 
     public static void updateJSON(String gameName, String gamePath){
-        ;
+       try {
+           //make a new file path for my json file, JSON object to store gameName gamePath variables
+           String jsonFilePath = "C:\\Users\\Daniel\\OneDrive\\Desktop\\Games\\GamePathJSON - Copy.json";
+           JSONObject gameKeys = new JSONObject();
+           //Filewriter object writes the json file, then closes it
+           FileWriter jsonWriter = new FileWriter(jsonFilePath, true);
+           gameKeys.put(gameName, gamePath);
+           //Ive removed {}. as i improved this method, i want to be able to insert within {} of the json file itself
+           //this means {current:example} when this methods invoked becomes {current:example, new:item} working on this
+           jsonWriter.write(gameKeys.toString().replace("{", "").replace("}", "")); 
+           jsonWriter.close();
+
+       } catch (Exception e) {
+           throw new RuntimeException(e);
+       }
         //I must import the appropriate class before i can work on this method, it will update the JSON file on my computer.
     }
 
     //this method updates the text files on the computer
     public static void updateTXT(String gameName, String gamePath){
-        String filePath = "C:\\Users\\Daniel\\OneDrive\\Desktop\\Games\\GameFilePath.txt";
-        String fileName = "C:\\Users\\Daniel\\OneDrive\\Desktop\\Games\\GameListTXT.txt";
+        //String filePath = "C:\\Users\\Daniel\\OneDrive\\Desktop\\Games\\GameFilePath.txt";
+        //String fileName = "C:\\Users\\Daniel\\OneDrive\\Desktop\\Games\\GameListTXT.txt";
+        String filePath = "C:\\Users\\Daniel\\OneDrive\\Desktop\\test2.txt";
+        String fileName = "C:\\Users\\Daniel\\OneDrive\\Desktop\\test.txt";
         try {
             FileWriter gP = new FileWriter(filePath, true);
             FileWriter gN = new FileWriter(fileName, true);
@@ -74,10 +91,12 @@ public class AddNewGames {
         String gameName = scanner.nextLine();
         System.out.println("Please enter the game file path:");
         String gamePath = scanner.nextLine();
-        String checked = checkPath(gamePath);
 
-        updateTXT(gameName, checked);
+        //updateTXT(gameName, checkPath(gamePath));
+        updateJSON(gameName, checkPath(gamePath));
+        //updateCSV(gameName, checkPath(gamePath));
         System.out.println("Files updated successfully");
         
     }
 }
+
