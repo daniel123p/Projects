@@ -50,7 +50,7 @@ public class AddNewGames {
            //Filewriter object writes the json file, then closes it
            FileWriter jsonWriter = new FileWriter(jsonFilePath, true);
            gameKeys.put(gameName, gamePath);
-           //Ive removed {}. as i improved this method, i want to be able to insert within {} of the json file itself
+           //Ive removed {}. as i improved this method, i want to be able to insert a new entry within the {} of the json file itself
            //this means {current:example} when this methods invoked becomes {current:example, new:item} working on this
            jsonWriter.write(gameKeys.toString().replace("{", "").replace("}", "")); 
            jsonWriter.close();
