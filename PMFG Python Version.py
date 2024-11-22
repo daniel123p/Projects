@@ -5,13 +5,15 @@ import elevate
 elevate.elevate()
 
 # Open txt file of file paths
-with open("C:\\Users\Daniel\OneDrive\Desktop\Games\GameFilePath.txt", "r") as gpfile:
-    filePaths =  gpfile.read().splitlines()
+try:
+    with open("C:\\Users\Daniel\OneDrive\Desktop\Games\GameFilePath.txt", "r") as gpfile:
+        filePaths =  gpfile.read().splitlines()
 
-#Open txt file for list of games
-with open(r"C:\Users\Daniel\OneDrive\Desktop\Games\GameListTXT.txt", "r") as glist:
-    gamelist = glist.read().splitlines()
-
+    #Open txt file for list of games
+    with open(r"C:\Users\Daniel\OneDrive\Desktop\Games\GameListTXT.txt", "r") as glist:
+        gamelist = glist.read().splitlines()
+except FileNotFoundError:
+    print("File path is missing, incorrect, or has been changed")
 #replaces Sonic Heroes' file path to the original exe file. Makes it more compatible with run() method
 filePaths.pop(8)
 filePaths.insert(8, r'Z:\SONICHEROES\Tsonic_win.exe')

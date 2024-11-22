@@ -1,10 +1,12 @@
 {
     "java.project.sourcePaths": [
-        "src\\main\\java",
-        "."
+        ".",
+        "src\\main\\java"
     ],
     "java.project.referencedLibraries": [
+        "com.fasterxml.jackson.databind.jar",
         "c:\\Users\\Daniel\\OneDrive\\Desktop\\Projects\\JavaProject\\commons-csv-1.12.0.jar",
         "c:\\Users\\Daniel\\OneDrive\\Desktop\\Projects\\JavaProject\\json-20240303.jar"
-    ]
+    ],
+    "java.debug.settings.onBuildFailureProceed": true
 }

@@ -3,8 +3,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-import org.json.*;
+import java.io.File;
+import com.fasterxml.jackson.databind.*;
 import org.apache.commons.csv.*;
+
 public class AddNewGames {
     //Input validation method that checks to see if the user inputs an actual file path, i could simply call a File reader here, then implement a try catch. I may make another method to demonstrate this
     private static String checkPath(String gamePath){
@@ -44,14 +46,10 @@ public class AddNewGames {
        try {
            //make a new file path for my json file, JSON object to store gameName gamePath variables
            String jsonFilePath = "C:\\Users\\Daniel\\OneDrive\\Desktop\\test.json";
-           JSONObject gameKeys = new JSONObject();
-           //Filewriter object writes the json file, then closes it
-           FileWriter jsonWriter = new FileWriter(jsonFilePath, true);
-           gameKeys.put(gameName, gamePath);
-           //Ive removed {}. as i improved this method, i want to be able to insert a new entry within the {} of the json file itself
-           //this means {current:example} when this methods invoked becomes {current:example, new:item} working on this
-           jsonWriter.write(gameKeys.toString().replace("{", "").replace("}", "")); 
-           jsonWriter.close();
+           ObjectMapper mapper = new ObjectMapper();
+           String test = mapper.readTree(new FileReader(jsonFilePath)).toString();
+           System.out.println(test);
+
 
        } catch (Exception e) {
            throw new RuntimeException(e);
