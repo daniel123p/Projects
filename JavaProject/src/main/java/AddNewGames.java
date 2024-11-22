@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.io.File;
 import com.fasterxml.jackson.databind.*;
@@ -45,12 +47,13 @@ public class AddNewGames {
     public static void updateJSON(String gameName, String gamePath){
        try {
            //make a new file path for my json file, JSON object to store gameName gamePath variables
+           //String jsonFilePath = "C:\\Users\\Daniel\\OneDrive\\Games\\GamePathJSON.json";
            String jsonFilePath = "C:\\Users\\Daniel\\OneDrive\\Desktop\\test.json";
+           //Mapper from the jackson library will read and write our games
            ObjectMapper mapper = new ObjectMapper();
-           String test = mapper.readTree(new FileReader(jsonFilePath)).toString();
-           System.out.println(test);
-
-
+           Map<String, String> newGames = mapper.readValue(new File(jsonFilePath), Map.class);
+           newGames.put(gameName, gamePath);
+           mapper.writeValue(new File(jsonFilePath), newGames);
        } catch (Exception e) {
            throw new RuntimeException(e);
        }
