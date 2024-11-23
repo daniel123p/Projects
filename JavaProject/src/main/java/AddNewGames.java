@@ -2,31 +2,32 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 import java.io.File;
 import com.fasterxml.jackson.databind.*;
-import org.apache.commons.csv.*;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
 
 public class AddNewGames {
-    //Input validation method that checks to see if the user inputs an actual file path, i could simply call a File reader here, then implement a try catch. I may make another method to demonstrate this
-    private static String checkPath(String gamePath){
+    //Input validation method that checks to see if the user inputs an actual file path, ensures there is a real file there.
+    private static String checkPath(String filePath){
         Scanner scanner = new Scanner(System.in);
-        //Booleans that find the \\ characters in the file path and check for an exe file
-        Boolean slash = gamePath.contains("\\");
-        Boolean exe = gamePath.endsWith(".exe");
+        File check = new File(filePath);
+        Boolean type = fileTypes(filePath);
         //If statement that validates the input, returns correctPath if they input something, other than a filepath.
-        if (exe && slash){
-            return gamePath;
-        } else{
-                //recursion
-                System.err.println("Please enter a valid file path. Be sure to that it leads to an executable file(.exe)");
-                gamePath = scanner.nextLine();
-                checkPath(gamePath);
+        if (type && check.exists()) {return filePath;}
+        else{//recursion
+                System.err.println("Please enter a valid file path. Be sure to that it leads to an exe, json, txt, or csv file.");
+                filePath = scanner.nextLine();
+                checkPath(filePath);
             }
-            return gamePath;
+            return filePath;
         
+    }
+    private static Boolean fileTypes(String filePath){
+        String[] ftArray = {".exe", ".json", ".txt", ".csv"};
+        for (String type: ftArray){if (filePath.endsWith(type)) return true;}
+        return false;
     }
 
     //method that counts lines in the text file. When this program opens, this method counts the amount of games already in there and adds a corresponding number.
@@ -48,7 +49,7 @@ public class AddNewGames {
        try {
            //make a new file path for my json file, JSON object to store gameName gamePath variables
            //String jsonFilePath = "C:\\Users\\Daniel\\OneDrive\\Games\\GamePathJSON.json";
-           String jsonFilePath = "C:\\Users\\Daniel\\OneDrive\\Desktop\\test.json";
+           String jsonFilePath = checkPath("C:\\Users\\Daniel\\OneDrive\\Desktop\\test.json");
            //Mapper from the jackson library will read and write our games
            ObjectMapper mapper = new ObjectMapper();
            Map<String, String> newGames = mapper.readValue(new File(jsonFilePath), Map.class);
@@ -57,15 +58,14 @@ public class AddNewGames {
        } catch (Exception e) {
            throw new RuntimeException(e);
        }
-        //I must import the appropriate class before i can work on this method, it will update the JSON file on my computer.
     }
 
     //this method updates the text files on the computer
     public static void updateTXT(String gameName, String gamePath){
-        //String txtPath = "C:\\Users\\Daniel\\OneDrive\\Desktop\\Games\\GameFilePath.txt";
-        //String txtName = "C:\\Users\\Daniel\\OneDrive\\Desktop\\Games\\GameListTXT.txt";
-        String txtPath = "C:\\Users\\Daniel\\OneDrive\\Desktop\\test2.txt";
-        String txtName = "C:\\Users\\Daniel\\OneDrive\\Desktop\\test.txt";
+        //String txtPath = checkPath("C:\\Users\\Daniel\\OneDrive\\Desktop\\Games\\GameFilePath.txt");
+        //String txtName = checkPath("C:\\Users\\Daniel\\OneDrive\\Desktop\\Games\\GameListTXT.txt");
+        String txtPath = checkPath("C:\\Users\\Daniel\\OneDrive\\Desktop\\test2.txt");
+        String txtName = checkPath("C:\\Users\\Daniel\\OneDrive\\Desktop\\test.txt");
         try {
             FileWriter gP = new FileWriter(txtPath, true);
             FileWriter gN = new FileWriter(txtName, true);
@@ -78,12 +78,27 @@ public class AddNewGames {
         }
     }
 
-    public static void updateCSV(String gameName, String gamePath){
-        String csvPath = "C:\\Users\\Daniel\\OneDrive\\Desktop\\Test.csv";
-        ;
-        //I must import the appropriate class before i can work on this method, it will update the CSV file on my computer.
+    //writes to the csv file. contains a logic error somewhere.
+    public static void updateCSV(String gameName, String gamePath) {
+        try {
+            String csvPath = checkPath("C:\\Users\\Daniel\\OneDrive\\Desktop\\Test.csv");
+            List<String[]> list = new ArrayList<>();
+            String[] csvList;
+            BufferedReader reader = new BufferedReader(new FileReader(csvPath));
+            CSVReader csvReader = new CSVReader(reader);
+            while ((csvList = csvReader.readNext()) != null) {
+                list.add(csvList);
+            }
+            for(String[] path : list){
+                for(String rowe : path){
+                    System.out.println(rowe);
+                }
+                System.out.println();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
-
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
         System.out.println("This java program adds a new game and an associated file path to files associated with the PMFG\\Game Runner programs.");
@@ -93,8 +108,8 @@ public class AddNewGames {
         String gamePath = scanner.nextLine();
 
         //updateTXT(gameName, checkPath(gamePath));
-        updateJSON(gameName, checkPath(gamePath));
-        //updateCSV(gameName, checkPath(gamePath));
+        //updateJSON(gameName, checkPath(gamePath));
+        updateCSV(gameName, checkPath(gamePath));
         System.out.println("Files updated successfully");
         
     }
