@@ -80,18 +80,17 @@ public class AddNewGames {
 
     //writes to the csv file. contains a logic error somewhere.
     public static void updateCSV(String gameName, String gamePath) {
-        try {
-            String csvPath = checkPath("C:\\Users\\Daniel\\OneDrive\\Desktop\\Test.csv");
+        String csvPath = checkPath("C:\\Users\\Daniel\\OneDrive\\Desktop\\Test.csv");
+        try(FileReader fr = new FileReader(csvPath)) {
             List<String[]> list = new ArrayList<>();
             String[] csvList;
-            BufferedReader reader = new BufferedReader(new FileReader(csvPath));
-            CSVReader csvReader = new CSVReader(reader);
-            while ((csvList = csvReader.readNext()) != null) {
-                list.add(csvList);
-            }
+            CSVReader csvReader = new CSVReader(fr);
+            while (null != (csvList = csvReader.readNext())) {list.add(csvList);}
+            list.get(list.size() - 2)[list.get(list.size() - 1).length - 1] = gameName;
+            list.get(list.size() - 1)[list.get(list.size() - 1).length - 1] = gamePath;
             for(String[] path : list){
                 for(String rowe : path){
-                    System.out.println(rowe);
+                    System.out.print(rowe);
                 }
                 System.out.println();
             }
