@@ -1,12 +1,8 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
-import java.io.File;
 import com.fasterxml.jackson.databind.*;
-import com.opencsv.CSVReader;
-import com.opencsv.CSVWriter;
+import com.opencsv.*;
+
 
 public class AddNewGames {
     //Input validation method that checks to see if the user inputs an actual file path, ensures there is a real file there.
@@ -90,25 +86,23 @@ public class AddNewGames {
             List<ArrayList<String>> list = new ArrayList<>();
             CSVReader csvReader = new CSVReader(fr);
             //stores contents of csv rows into an array list
-            ArrayList<String> csvList = new ArrayList<>(Arrays.asList(csvReader.readNext()));
+            ArrayList<String> csvList;
             //populating 2d array list
-            while (!csvList.isEmpty()) {list.add(csvList);}
-            //i can not use the size method, even though i am populating the list, it is still up as empty.
-            list.get().add(gameName);
-            list.get().add(gamePath);
-            /*printing the list, once the list prints the added elements in the correct spot on the csv, i will,
-            create the csv writer object and write to the test file. (i could also just do that and open the test file
-            every time, and ommit printing altogether */
+            while (csvReader.readNext() != null) {
+                csvList = new ArrayList<>(Arrays.asList(csvReader.readNext()));
+                list.add(csvList);
+            }
+            //list.get(list.size() - 2).add(gameName);
+            //list.get(list.size() - 1).add(gamePath);
             for(ArrayList<String> rowList : list){
-                for(String row : rowList){
-                    System.out.print(row);
-                }
+                for(String row : rowList){System.out.print(row);}
                 System.out.println();
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
         System.out.println("This java program adds a new game and an associated file path to files associated with the PMFG\\Game Runner programs.");
