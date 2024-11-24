@@ -82,21 +82,26 @@ public class AddNewGames {
         String csvPath = checkPath("C:\\Users\\Daniel\\OneDrive\\Desktop\\Test.csv");
         //try resource reads the file in
         try(FileReader fr = new FileReader(csvPath)) {
-            //list that stores each row of a csv file. each row is read into its own array list
-            List<ArrayList<String>> list = new ArrayList<>();
+            //creating csv reader
             CSVReader csvReader = new CSVReader(fr);
-            //stores contents of csv rows into an array list
-            ArrayList<String> csvList;
-            //populating 2d array list
-            while (csvReader.readNext() != null) {
-                csvList = new ArrayList<>(Arrays.asList(csvReader.readNext()));
-                list.add(csvList);
-            }
-            //list.get(list.size() - 2).add(gameName);
-            //list.get(list.size() - 1).add(gamePath);
-            for(ArrayList<String> rowList : list){
-                for(String row : rowList){System.out.print(row);}
-                System.out.println();
+            //list that holds all rows and columns in our csv file
+            List<String[]> list = new ArrayList<>(csvReader.readAll());
+            //add creating new arrays. these arrays will copy the current arrays in the list, then expand to accomodate new elements.
+            String[] addPath = Arrays.copyOf(list.get(list.size() - 2), list.get(list.size() - 2).length + 1);
+            String[] addName = Arrays.copyOf(list.get(list.size() - 1), list.get(list.size() - 1).length + 1);
+            //adding new elements to our copy arrays
+            addName[list.get(list.size() - 1).length] = gameName;
+            addPath[list.get(list.size() - 2).length] = gamePath;
+            //returning the copy arrays to the same place the originals are at in the list.
+            list.set(list.size() - 2, addPath);
+            list.set(list.size() - 1, addName);
+            //writing our newly modified csv file
+            try(FileWriter fw = new FileWriter(csvPath)) {
+                CSVWriter writer = new CSVWriter(fw, ',',
+                        CSVWriter.NO_QUOTE_CHARACTER,
+                        CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                        CSVWriter.DEFAULT_LINE_END);
+                writer.writeAll(list);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
