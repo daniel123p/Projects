@@ -87,14 +87,14 @@ public class AddNewGames {
             //list that holds all rows and columns in our csv file
             List<String[]> list = new ArrayList<>(csvReader.readAll());
             //add creating new arrays. these arrays will copy the current arrays in the list, then expand to accomodate new elements.
-            String[] addPath = Arrays.copyOf(list.get(list.size() - 2), list.get(list.size() - 2).length + 1);
-            String[] addName = Arrays.copyOf(list.get(list.size() - 1), list.get(list.size() - 1).length + 1);
+            String[] addPath = Arrays.copyOf(list.get(list.size() - 1), list.get(list.size() - 1).length + 1);
+            String[] addName = Arrays.copyOf(list.get(list.size() - 2), list.get(list.size() - 2).length + 1);
             //adding new elements to our copy arrays
-            addName[list.get(list.size() - 1).length] = gameName;
-            addPath[list.get(list.size() - 2).length] = gamePath;
+            addName[list.get(list.size() - 2).length] = gameName;
+            addPath[list.get(list.size() - 1).length] = gamePath;
             //returning the copy arrays to the same place the originals are at in the list.
-            list.set(list.size() - 2, addPath);
-            list.set(list.size() - 1, addName);
+            list.set(list.size() - 1, addPath);
+            list.set(list.size() - 2, addName);
             //writing our newly modified csv file
             try(FileWriter fw = new FileWriter(csvPath)) {
                 CSVWriter writer = new CSVWriter(fw, ',',
@@ -110,14 +110,14 @@ public class AddNewGames {
 
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("This java program adds a new game and an associated file path to files associated with the PMFG\\Game Runner programs.");
+        System.out.println("This java program adds a new game and an associated file path to files associated with the PMFG\\Game Runner programs. \n");
         System.out.println("Please enter the game name:");
         String gameName = scanner.nextLine();
         System.out.println("Please enter the game file path:");
         String gamePath = scanner.nextLine();
 
-        //updateTXT(gameName, checkPath(gamePath));
-        //updateJSON(gameName, checkPath(gamePath));
+        updateTXT(gameName, checkPath(gamePath));
+        updateJSON(gameName, checkPath(gamePath));
         updateCSV(gameName, checkPath(gamePath));
         System.out.println("Files updated successfully");
         
