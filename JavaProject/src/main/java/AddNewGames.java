@@ -78,19 +78,30 @@ public class AddNewGames {
         }
     }
 
-    //writes to the csv file. contains a logic error somewhere.
+    /*writes to the csv file. Currently, i am using the println statement as a test for the output before i write to the file.
+       I am using the steps as follows:
+     */
     public static void updateCSV(String gameName, String gamePath) {
+        //assign the file to a variable & make sure the file exists and is a valid type.
         String csvPath = checkPath("C:\\Users\\Daniel\\OneDrive\\Desktop\\Test.csv");
+        //try resource reads the file in
         try(FileReader fr = new FileReader(csvPath)) {
-            List<String[]> list = new ArrayList<>();
-            String[] csvList;
+            //list that stores each row of a csv file. each row is read into its own array list
+            List<ArrayList<String>> list = new ArrayList<>();
             CSVReader csvReader = new CSVReader(fr);
-            while (null != (csvList = csvReader.readNext())) {list.add(csvList);}
-            list.get(list.size() - 2)[list.get(list.size() - 1).length - 1] = gameName;
-            list.get(list.size() - 1)[list.get(list.size() - 1).length - 1] = gamePath;
-            for(String[] path : list){
-                for(String rowe : path){
-                    System.out.print(rowe);
+            //stores contents of csv rows into an array list
+            ArrayList<String> csvList = new ArrayList<>(Arrays.asList(csvReader.readNext()));
+            //populating 2d array list
+            while (!csvList.isEmpty()) {list.add(csvList);}
+            //i can not use the size method, even though i am populating the list, it is still up as empty.
+            list.get().add(gameName);
+            list.get().add(gamePath);
+            /*printing the list, once the list prints the added elements in the correct spot on the csv, i will,
+            create the csv writer object and write to the test file. (i could also just do that and open the test file
+            every time, and ommit printing altogether */
+            for(ArrayList<String> rowList : list){
+                for(String row : rowList){
+                    System.out.print(row);
                 }
                 System.out.println();
             }
