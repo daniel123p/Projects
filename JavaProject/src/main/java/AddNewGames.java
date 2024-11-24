@@ -3,7 +3,6 @@ import java.util.*;
 import com.fasterxml.jackson.databind.*;
 import com.opencsv.*;
 
-
 public class AddNewGames {
     //Input validation method that checks to see if the user inputs an actual file path, ensures there is a real file there.
     private static String checkPath(String filePath){
@@ -74,9 +73,6 @@ public class AddNewGames {
         }
     }
 
-    /*writes to the csv file. Currently, i am using the println statement as a test for the output before i write to the file.
-       I am using the steps as follows:
-     */
     public static void updateCSV(String gameName, String gamePath) {
         //assign the file to a variable & make sure the file exists and is a valid type.
         String csvPath = checkPath("C:\\Users\\Daniel\\OneDrive\\Desktop\\Test.csv");
