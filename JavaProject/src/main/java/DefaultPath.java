@@ -2,11 +2,13 @@ import java.io.File;
 import java.util.Scanner;
 
 class DefaultPath {
+    // Default files to that store the names and file paths of games/programs
     public static String defaultTXTpath;
     public static String defaultTXTname;
     public static String defaultJSON;
     public static String defaultCSV;
 
+    // default file paths on my computer (Test files)
     private static void setallDefaultpaths(){
         defaultTXTpath = "C:\\Users\\Daniel\\OneDrive\\Desktop\\test2.txt";
         defaultTXTname = "C:\\Users\\Daniel\\OneDrive\\Desktop\\test.txt";
@@ -14,22 +16,20 @@ class DefaultPath {
         defaultCSV = "C:\\Users\\Daniel\\OneDrive\\Desktop\\Test.csv";
     }
 
+    //method that sets new files
     private static void setnewPaths() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter default CSV filepath: ");
-        defaultCSV = scanner.nextLine();
-        checkPath(defaultCSV);
+        defaultCSV = checkPath(scanner.nextLine());
         System.out.println("Enter default JSON filepath: ");
-        defaultJSON = scanner.nextLine();
-        checkPath(defaultJSON);
+        defaultJSON = checkPath(scanner.nextLine());
         System.out.println("Enter default TXT Program Name filepath: ");
-        defaultTXTname = scanner.nextLine();
-        checkPath(defaultTXTname);
+        defaultTXTname = checkPath(scanner.nextLine());
         System.out.println("Enter default TXT files filepath: ");
-        defaultTXTpath = scanner.nextLine();
-        checkPath(defaultTXTpath);
+        defaultTXTpath = checkPath(scanner.nextLine());
     }
 
+    //checks file types. private method thats used for checkPath.
     private static Boolean fileTypes(String filePath) {
         String[] ftArray = {".exe", ".json", ".txt", ".csv"};
         for (String type : ftArray) {
@@ -38,6 +38,7 @@ class DefaultPath {
         return false;
     }
 
+    //method that checks if the file exits and is of the correct file type
     public static String checkPath(String filePath) {
         Scanner scanner = new Scanner(System.in);
         File check = new File(filePath);
@@ -53,6 +54,7 @@ class DefaultPath {
         return filePath;
     }
 
+    //main method that gets called in AddNewGames
     public static void defaultMain() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Has a default path been configured? (Y/N)");
@@ -69,6 +71,7 @@ class DefaultPath {
                 System.out.println("Please type in Yes or No");
             }
         }
+        //prints out what each default method is.
         System.out.println("Default path is: " + defaultTXTpath);
         System.out.println("Default path is: " + defaultTXTname);
         System.out.println("Default path is: " + defaultJSON);
