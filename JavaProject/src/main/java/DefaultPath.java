@@ -1,5 +1,5 @@
-import java.io.File;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 class DefaultPath {
     // Default files to that store the names and file paths of games/programs
@@ -8,12 +8,36 @@ class DefaultPath {
     public static String defaultJSON;
     public static String defaultCSV;
 
+    //creates file to store necessary program files
+    private static File createFile() {
+        File path = new File("AddNewGames\\PathsToFiles\\MainGamePaths");
+        File loadGamefiles = new File("AddNewGames\\PathsToFiles\\MainGamePaths\\LoadGameFiles.txt");
+        try {
+            if (!loadGamefiles.exists()) {
+                path.mkdirs();
+                loadGamefiles.createNewFile();
+            }
+        } catch (IOException e) {
+            System.err.println(e);
+        }
+        return loadGamefiles;
+    }
+
     // default file paths on my computer (Test files)
     private static void setallDefaultpaths(){
-        defaultTXTpath = "C:\\Users\\Daniel\\OneDrive\\Desktop\\test2.txt";
-        defaultTXTname = "C:\\Users\\Daniel\\OneDrive\\Desktop\\test.txt";
-        defaultJSON = "C:\\Users\\Daniel\\OneDrive\\Desktop\\test.json";
-        defaultCSV = "C:\\Users\\Daniel\\OneDrive\\Desktop\\Test.csv";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(createFile()));
+            ArrayList<String> pathlist = new ArrayList<>();
+            String pathFiles;
+            while((pathFiles = br.readLine()) != null){
+                pathlist.add(pathFiles);
+            }
+            defaultCSV = pathlist.get(0);
+            defaultJSON = pathlist.get(1);
+            defaultTXTname = pathlist.get(2);
+            defaultTXTpath = pathlist.get(3);
+
+        } catch (Exception e) {System.err.println(e);}
     }
 
     //method that sets new files
@@ -27,6 +51,14 @@ class DefaultPath {
         defaultTXTname = checkPath(scanner.nextLine());
         System.out.println("Enter default TXT files filepath: ");
         defaultTXTpath = checkPath(scanner.nextLine());
+        try {
+            FileWriter writer = new FileWriter(createFile());
+            writer.write(defaultCSV);
+            writer.write(defaultJSON);
+            writer.write(defaultTXTname);
+            writer.write(defaultTXTpath);
+            writer.close();
+        } catch (Exception e) {System.err.println(e);}
     }
 
     //checks file types. private method thats used for checkPath.
@@ -58,9 +90,9 @@ class DefaultPath {
     public static void defaultMain() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Has a default path been configured? (Y/N)");
+        //while loop for input validation
         while (true) {
-            String answer = scanner.nextLine();
-            answer = answer.toLowerCase();
+            String answer = scanner.nextLine().toLowerCase();
             if (answer.equals("yes") || answer.equals("y")) {
                 setallDefaultpaths();
                 break;
@@ -72,10 +104,10 @@ class DefaultPath {
             }
         }
         //prints out what each default method is.
-        System.out.println("Default path is: " + defaultTXTpath);
-        System.out.println("Default path is: " + defaultTXTname);
-        System.out.println("Default path is: " + defaultJSON);
-        System.out.println("Default path is: " + defaultCSV);
+        System.out.println("Default path for the txt file containing game locations is: " + defaultTXTpath);
+        System.out.println("Default path for the txt file containing game name: " + defaultTXTname);
+        System.out.println("Default path for the json file containing game names and locations is: " + defaultJSON);
+        System.out.println("Default path for the csv file containing game names and locations is: " + defaultCSV);
     }
 }
 

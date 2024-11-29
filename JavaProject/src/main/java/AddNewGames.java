@@ -85,11 +85,10 @@ public class AddNewGames {
         System.out.println("Please enter the game name:");
         String gameName = scanner.nextLine();
         System.out.println("Please enter the game file path: (Note: the game file must be an executable (.exe))");
-        String gamePath = scanner.nextLine();
-        String validatedPath = DefaultPath.checkPath(gamePath);
-        updateTXT(gameName, validatedPath);
-        updateJSON(gameName, validatedPath);
-        updateCSV(gameName, validatedPath);
+        String gamePath = DefaultPath.checkPath(scanner.nextLine());
+        updateTXT(gameName, gamePath);
+        updateJSON(gameName, gamePath);
+        updateCSV(gameName, gamePath);
         System.out.println("Files updated successfully");
         
     }
