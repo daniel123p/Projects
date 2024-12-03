@@ -1,0 +1,12 @@
+{
+    "java.project.sourcePaths": [
+        "."
+    ],
+    "java.project.referencedLibraries": [
+        "c:\\Users\\Daniel\\OneDrive\\Desktop\\Projects\\JavaProject\\commons-lang3-3.17.0.jar",
+        "c:\\Users\\Daniel\\OneDrive\\Desktop\\Projects\\JavaProject\\jackson-annotations-2.18.1.jar",
+        "c:\\Users\\Daniel\\OneDrive\\Desktop\\Projects\\JavaProject\\jackson-core-2.18.1.jar",
+        "c:\\Users\\Daniel\\OneDrive\\Desktop\\Projects\\JavaProject\\jackson-databind-2.18.1.jar",
+        "c:\\Users\\Daniel\\OneDrive\\Desktop\\Projects\\JavaProject\\opencsv-3.8.jar"
+    ]
+}
