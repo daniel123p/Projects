@@ -1,0 +1,65 @@
+@font-face {
+    font-family: "Trench";
+    src: url(fonts/TrenchThin-aZ1J.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url(images/glowingspace.jpg);
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+}
+
+#header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+h1 {
+    font-family: "Trench";
+    font-size: 100px;
+    color: white;
+    animation-name: slideleft;
+    animation-duration: 5s;
+}
+
+nav ul {
+    display: flex;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    animation-name: slideleft2;
+    animation-duration: 5s;
+}
+
+button {
+    background-color: white;
+    border-radius: 20px;
+    font-family: "Trench";
+    font-size: medium;
+    padding: 5px;
+}
+
+iframe {
+    width: 100%;
+    height: 100vh;
+    border: none;
+    overflow: hidden;
+    display: block;
+}
+
+@keyframes slideleft{
+    from{transform: translateX(-100%);}
+}
+
+@keyframes slideleft2{
+    from{transform: translateX(-700%);}
+}

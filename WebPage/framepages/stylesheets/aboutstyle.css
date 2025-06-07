@@ -1,0 +1,33 @@
+@font-face {
+    font-family: "Trench";
+    src: url(../../fonts/TrenchThin-aZ1J.ttf);
+}
+
+@font-face {
+    font-family: "Speedy";
+    src: url(../../fonts/SpeedyRegular-7BLoE.ttf);
+}
+
+h1{
+    font-family: Trench;
+    font-size: 50px;
+    align-items: center;
+    justify-self: center;
+    color: white;
+    margin-bottom: -4%;
+}
+
+p{
+    border: 7px solid white;
+    border-radius: 5px;
+    padding: 5px;
+    display: inline-block; /* Allows the border to fit the text content */
+    position: flex;
+    max-width: 500px;
+    margin: 5%;
+    margin-left: 41%;
+    font-size: 150%;
+    font-family: Speedy;
+    color: #00FFFF;
+    text-shadow: 2px 2px 3px #FF0000;
+}
