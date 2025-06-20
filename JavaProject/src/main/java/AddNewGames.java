@@ -20,7 +20,8 @@ public class AddNewGames {
 
     public static void updateJSON(String gameName, String gamePath){
        try {
-           String jsonFilePath = DefaultPath.defaultJSON;
+           DefaultPath defaultPath = new DefaultPath();
+           String jsonFilePath = defaultPath.getdefaultJSON();
            //Mapper from the jackson library will read and write our games
            ObjectMapper mapper = new ObjectMapper();
            Map<String, String> newGames = mapper.readValue(new File(jsonFilePath), Map.class);
@@ -33,8 +34,9 @@ public class AddNewGames {
 
     //this method updates the text files on the computer
     public static void updateTXT(String gameName, String gamePath){
-        String txtPath = DefaultPath.defaultTXTpath;
-        String txtName = DefaultPath.defaultTXTname;
+        DefaultPath defaultPath = new DefaultPath();
+        String txtPath = defaultPath.getdefaultTXTpath();
+        String txtName = defaultPath.getdefaultTXTname();
         try {
             FileWriter gP = new FileWriter(txtPath, true);
             FileWriter gN = new FileWriter(txtName, true);
@@ -48,8 +50,9 @@ public class AddNewGames {
     }
 
     public static void updateCSV(String gameName, String gamePath) {
+        DefaultPath defaultPath = new DefaultPath();
         //assign the file to a variable & make sure the file exists and is a valid type.
-        String csvPath = DefaultPath.defaultCSV;
+        String csvPath = defaultPath.getdefaultCSV();
         //try resource reads the file in
         try(FileReader fr = new FileReader(csvPath)) {
             //creating csv reader
@@ -80,12 +83,13 @@ public class AddNewGames {
 
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
-        DefaultPath.defaultMain();
+        DefaultPath defaultPath = new DefaultPath();
+        defaultPath.defaultMain();
         System.out.println("This java program adds a new game and an associated file path to files associated with the PMFG\\Game Runner programs. \n");
         System.out.println("Please enter the game name:");
         String gameName = scanner.nextLine();
         System.out.println("Please enter the game file path: (Note: the game file must be an executable (.exe))");
-        String gamePath = DefaultPath.checkPath(scanner.nextLine());
+        String gamePath = defaultPath.checkPath(scanner.nextLine());
         updateTXT(gameName, gamePath);
         updateJSON(gameName, gamePath);
         updateCSV(gameName, gamePath);

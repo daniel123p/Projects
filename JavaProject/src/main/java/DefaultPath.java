@@ -1,17 +1,34 @@
 import java.io.*;
 import java.util.*;
+import com.fasterxml.jackson.databind.*;
 
 class DefaultPath {
     // Default files to that store the names and file paths of games/programs
-    public static String defaultTXTpath;
-    public static String defaultTXTname;
-    public static String defaultJSON;
-    public static String defaultCSV;
+    private static String defaultTXTpath;
+    private static String defaultTXTname;
+    private static String defaultJSON;
+    private static String defaultCSV;
+
+    public static String getdefaultTXTpath(){
+        return defaultTXTpath;
+    }
+
+    public static String getdefaultTXTname(){
+        return defaultTXTname;
+    }
+
+    public static String getdefaultJSON(){
+        return defaultJSON;
+    }
+
+    public static String getdefaultCSV(){
+        return defaultCSV;
+    }
 
     //creates file to store necessary program files
     private static File createFile() {
-        File path = new File("AddNewGames\\PathsToFiles\\MainGamePaths");
-        File loadGamefiles = new File("AddNewGames\\PathsToFiles\\MainGamePaths\\LoadGameFiles.txt");
+        File path = new File("C:\\AddNewGames\\PathsToFiles\\MainGamePaths");
+        File loadGamefiles = new File("C:\\AddNewGames\\PathsToFiles\\MainGamePaths\\LoadGameFiles.json");
         try {
             if (!loadGamefiles.exists()) {
                 path.mkdirs();
@@ -25,9 +42,12 @@ class DefaultPath {
 
     // default file paths on my computer (Test files)
     private static void setallDefaultpaths(){
+        ObjectMapper mapper = new ObjectMapper();
+
         try {
             BufferedReader br = new BufferedReader(new FileReader(createFile()));
-            ArrayList<String> pathlist = new ArrayList<>();
+            List<String> pathlist = mapper.readValue(createFile(), List.class);
+
             String pathFiles;
             while((pathFiles = br.readLine()) != null){
                 pathlist.add(pathFiles);
@@ -42,6 +62,8 @@ class DefaultPath {
 
     //method that sets new files
     private static void setnewPaths() {
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayList<String> storePaths = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter default CSV filepath: ");
         defaultCSV = checkPath(scanner.nextLine());
@@ -51,13 +73,12 @@ class DefaultPath {
         defaultTXTname = checkPath(scanner.nextLine());
         System.out.println("Enter default TXT files filepath: ");
         defaultTXTpath = checkPath(scanner.nextLine());
+        storePaths.add(defaultCSV);
+        storePaths.add(defaultJSON);
+        storePaths.add(defaultTXTpath);
+        storePaths.add(defaultTXTname);
         try {
-            FileWriter writer = new FileWriter(createFile());
-            writer.write(defaultCSV);
-            writer.write(defaultJSON);
-            writer.write(defaultTXTname);
-            writer.write(defaultTXTpath);
-            writer.close();
+            mapper.writeValue(createFile(), storePaths);
         } catch (Exception e) {System.err.println(e);}
     }
 
