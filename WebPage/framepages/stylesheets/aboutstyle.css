@@ -8,26 +8,30 @@
     src: url(../../fonts/SpeedyRegular-7BLoE.ttf);
 }
 
-h1{
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
     font-family: Trench;
     font-size: 50px;
-    align-items: center;
-    justify-self: center;
     color: white;
-    margin-bottom: -4%;
+    margin-bottom: 1rem;
     animation-name: slideup;
     animation-duration: 2s;
 }
 
-p{
+p {
     border: 7px solid white;
     border-radius: 5px;
     padding: 5px;
-    display: inline-block; /* Allows the border to fit the text content */
-    position: flex;
+    display: inline-block;
     max-width: 500px;
-    margin: 5%;
-    margin-left: 41%;
     font-size: 150%;
     font-family: Speedy;
     color: #00FFFF;
@@ -36,20 +40,6 @@ p{
     animation-duration: 3s;
 }
 
-img{
-    margin-bottom: -13%;
-    margin-left: -21%;
-    animation: rotate 5s, slideleft 5s;
-}
-
 @keyframes slideup{
     from{transform: translateY(1500%);}
-}
-
-@keyframes rotate {
-    100%{transform: rotateZ(360deg);}
-}
-
-@keyframes slideleft{
-    from{transform: translateX(-500%);}
 }
